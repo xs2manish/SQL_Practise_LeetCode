@@ -1,0 +1,13 @@
+select id, sum(num1) as num
+from ((select accepter_id as id, count(*) as num1
+from request_accepted
+group by accepter_id
+order by num1 desc)
+UNION ALL
+(select requester_id as id, count(*) as num1
+from request_accepted
+group by requester_id
+order by num1 desc)) as temp1
+group by id
+order by num desc
+Limit 1
