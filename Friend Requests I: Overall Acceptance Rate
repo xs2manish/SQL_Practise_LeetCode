@@ -1,0 +1,7 @@
+select ifnull(round((req_accp/req_sent),2),0) as accept_rate
+from (select count(*) as req_sent
+      from (select distinct sender_id, send_to_id
+           from friend_request) as temp1) as temp3,
+     (select count(*) as req_accp
+      from (select distinct requester_id, accepter_id
+           from request_accepted) as temp2) as temp4
